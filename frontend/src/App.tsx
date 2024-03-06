@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Layout from '../src/layout/Layout'
-import Register from './pages/Register'
+import Register from './pages/Register';
 
 const App = () => {
   return (

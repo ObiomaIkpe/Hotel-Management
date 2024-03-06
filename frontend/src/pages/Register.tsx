@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import * as apiClient from '../api-client';
 
 
-type registerFormData = {
+ export type registerFormData = {
     firstName: string;
     lastName: string;
     email: string; 
@@ -9,12 +11,23 @@ type registerFormData = {
     confirmPassword: string;
 }
 
+const mutation = useMutation(apiClient.register, {
+    onSuccess: () => {
+        console.log('registration successful!')
+    },
+    onError: (error: Error) => {
+        console.log(error.message);
+    },
+});
+
 const Register = () => {
-    const {register, watch, handleSubmit} = useForm<registerFormData>();
+    const {register, watch, handleSubmit,
+    formState: {errors}} = useForm<registerFormData>();
 
     const onSubmit = handleSubmit((data) => {
         console.log(data);
-    })
+        mutation.mutate(data);
+    });
   return (
     <form className='flex flex-col gap-5' onSubmit={onSubmit}>
         <h2 className='text-3xl font-bold'>Create an Account</h2>
@@ -22,12 +35,18 @@ const Register = () => {
         <div className=" flex flex-col md:flex-row gap-5">
             <label className="text-gray-700 text-sm font-bold flex-1">
                 First Name 
-                <input className="border-rounded w-full py-1 px-2 font-normal" {...register("firstName", {required: "this field is required!"})}></input>
+                <input className="border rounded w-full py-1 px-2 font-normal" {...register("firstName", {required: "this field is required!"})}></input>
+                {errors.firstName && (
+                    <span className="text-red-500">{errors.firstName.message}</span>
+                )}
             </label>
 
             <label className="text-gray-700 text-sm font-bold flex-1">
                 Last Name 
                 <input className="border-rounded w-full py-1 px-2 font-normal" {...register("lastName", {required: "this field is required!"})}></input>
+                {errors.lastName && (
+                    <span className="text-red-500">{errors.lastName.message}</span>
+                )}
             </label>
             
         </div>
@@ -37,6 +56,9 @@ const Register = () => {
         <input className="border-rounded w-full py-1 px-2 font-normal" 
         type="email"
         {...register("email", {required: "this field is required!"})}></input>
+        {errors.email && (
+            <span className="text-red-500">{errors.email.message}</span>
+        )}
             </label>
 
             <label className="text-gray-700 text-sm font-bold flex-1">
@@ -46,6 +68,9 @@ const Register = () => {
         {...register("password", {required: "this field is required!",
         minLength: {value: 6,
         message: "password must be at least 6 characters long."}})}></input>
+    {errors.password && (
+        <span className="text-red-500">{errors.password.message}</span>
+    )}
             </label>
 
             <label className="text-gray-700 text-sm font-bold flex-1">
@@ -60,6 +85,9 @@ const Register = () => {
             }
         }}
         )}></input>
+        {errors.confirmPassword && (
+            <span className="text-red-500">{errors.confirmPassword.message}</span>
+        )}
             </label>
             <span>
                 <button 
