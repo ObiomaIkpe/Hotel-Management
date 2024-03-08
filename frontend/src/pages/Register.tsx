@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { QueryClient, useMutation } from "react-query";
 import * as apiClient from '../api-client';
 import { useAppContext } from "../contexts/AppContext";
 import { useNavigate } from "react-router-dom";
@@ -22,9 +22,10 @@ const Register = () => {
     formState: {errors}} = useForm<registerFormData>();
 
     const mutation = useMutation(apiClient.register, {
-        onSuccess: () => {
+        onSuccess: async () => {
             console.log('registration successful!');
             showToast({message: "registration success!", type: "SUCCESS"});
+            await QueryClient.invalidateQueries("validateToken");
             navigate("/");
             
         },
