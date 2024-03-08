@@ -41,3 +41,7 @@ export const login = async(req: Request, res: Response) => {
         res.status(500).json({message: 'something went wrong!'});
     }
 }
+
+export const sendToken = (req: Request, res: Response) => {
+    res.status(200).send({userId: req.userId})
+}

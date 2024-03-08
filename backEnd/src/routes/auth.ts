@@ -1,6 +1,7 @@
 import express,{Request, Response} from 'express';
 import {check} from "express-validator";
-import {login} from '../controller/auth';
+import {login, sendToken} from '../controller/auth';
+import verifyToken from '../middleware/authMiddleWare';
 const router = express.Router();
 
 router.post("/login", [
@@ -8,6 +9,8 @@ router.post("/login", [
         check("password", "Password with 6 or more characters required").isLength({
     min: 6,
   }) 
-], login)
+], login);
+
+router.get("/validate-token", verifyToken, sendToken);
 
   export default router;
