@@ -5,8 +5,17 @@ import "dotenv/config";
 import authRoutes from './routes/auth';
 import userRoutes from './routes/users';
 import cookieParser from 'cookie-parser';
+import {v2 as cloudinary} from 'cloudinary';
 
-mongoose.connect(process.env.MONGO_URL as string)
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+mongoose.connect(process.env.MONGO_URL as string).then(() => {
+    console.log("connected to databse:", process.env.MONGO_URL)
+});
 
 const app = express();
 app.use(cookieParser());
