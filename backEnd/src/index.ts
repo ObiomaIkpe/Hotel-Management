@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
 import mongoose from 'mongoose';
 import "dotenv/config";
 import authRoutes from './routes/auth';
@@ -25,6 +26,8 @@ app.use(cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
 }));
+
+app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
 app.use("/api/auth", authRoutes)
 app.use("/api/users", userRoutes)
