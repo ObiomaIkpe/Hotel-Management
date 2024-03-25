@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from '../api-client.ts';
 import { useAppContext } from "../contexts/AppContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,6 +14,7 @@ export type SingInFormData = {
 
 const SignIn = () => {
     const {showToast} = useAppContext();
+    const queryClient = useQueryClient()
     const {register, formState: {errors}, handleSubmit} = useForm<SingInFormData>();
     const navigate = useNavigate();
 
@@ -22,6 +23,7 @@ const SignIn = () => {
             console.log("this user has been signed in!");
             //1. show the toast.
             showToast({message: "sign in successful", type: "SUCCESS"})
+            await queryClient.invalidateQueries("validateToken")
             //2. navigate to the home page.
             navigate('/');   
         }, onError: (error: Error) => {

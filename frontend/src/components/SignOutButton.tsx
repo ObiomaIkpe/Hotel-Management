@@ -8,8 +8,8 @@ const SignOutButton = () => {
   const mutation = useMutation(apiClient.signOut, {
     onSuccess: async() => {
       //show toast
-      showToast({message: "Signed Out", type: "SUCCESS"});
       await queryClient.invalidateQueries("validateToken");
+      showToast({message: "Signed Out", type: "SUCCESS"});
     },
     onError: (error: Error) => {
       //show toast
@@ -21,7 +21,9 @@ const SignOutButton = () => {
     mutation.mutate();
   }
   return (
-    <button className='text-blue-600 px-3 font-bold bg-white hover:bg-gray-100'>Sign Out</button>
+    <button 
+    onClick={handleClick}
+    className='text-blue-600 px-3 font-bold bg-white hover:bg-gray-100'>Sign Out</button>
   )
 }
 
