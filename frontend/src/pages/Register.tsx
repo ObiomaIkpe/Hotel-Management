@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import { QueryClient, useMutation } from "react-query";
-import * as apiClient from '../api-client';
+import { useQueryClient, useMutation } from "react-query";
+import * as apiClient from '../api-client.ts';
 import { useAppContext } from "../contexts/AppContext";
 import { useNavigate } from "react-router-dom";
 
@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const Register = () => {
+    const queryClient = useQueryClient();
     const navigate = useNavigate();
 
     const {showToast}  = useAppContext();
@@ -25,7 +26,7 @@ const Register = () => {
         onSuccess: async () => {
             console.log('registration successful!');
             showToast({message: "registration success!", type: "SUCCESS"});
-            await QueryClient.invalidateQueries("validateToken");
+            await queryClient.invalidateQueries("validateToken");
             navigate("/");
             
         },
@@ -74,7 +75,7 @@ const Register = () => {
             </label>
 
             <label className="text-gray-700 text-sm font-bold flex-1">
-                Password
+                Password           
         <input className="border-rounded w-full py-1 px-2 font-normal" 
         type="password"
         {...register("password", {required: "this field is required!",

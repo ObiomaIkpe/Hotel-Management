@@ -4,3 +4,4 @@ const router  = express.Router();
 
 // api/my-hotels
 router.post("/", myHotels);
+

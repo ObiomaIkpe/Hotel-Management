@@ -22,6 +22,7 @@ const App = () => {
           <Route path='/sign-in' element={<Layout >
           <SignIn /> 
           </Layout> } />
+          
         <Route path='*' element={<Navigate to='/' />} />
       </Routes>
     </Router>
