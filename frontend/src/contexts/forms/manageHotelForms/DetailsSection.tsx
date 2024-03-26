@@ -32,7 +32,7 @@ const DetailsSection = () => {
                 country
         <input className="border rounded w-full py-1 px-2 font-normal" 
         type="text"
-        {...register("name", {required: "this field is required!"})}></input>
+        {...register("country", {required: "this field is required!"})}></input>
         {errors.country && (
             <span className="text-red-500">{errors.country.message}</span>
         )}
@@ -40,11 +40,11 @@ const DetailsSection = () => {
             </div>
 
             <label className="text-gray-700 text-sm font-bold flex-1">
-                Name
+                Description
         <textarea 
         className="border rounded w-full py-1 px-2 font-normal" 
         rows={10}
-        {...register("name", {required: "this field is required!"})}></textarea>
+        {...register("description", {required: "this field is required!"})}></textarea>
         {errors.description && (
             <span className="text-red-500">{errors.description.message}</span>
         )}
@@ -56,9 +56,28 @@ const DetailsSection = () => {
         type="number"
         min={1}
         className="border rounded w-full py-1 px-2 font-normal" 
-        {...register("name", {required: "this field is required!"})}></input>
+        {...register("pricePerNight", {required: "this field is required!"})}></input>
         {errors.pricePerNight && (
             <span className="text-red-500">{errors.pricePerNight.message}</span>
+        )}
+            </label>
+
+            <label             
+            className="text-gray-700 text-sm font-bold max-w-[50%]">
+                Star Rating
+        <select {...register("starRating", {
+            required: "this field is required",
+        }) }
+        className="border rounded w-full p-2 text-gray-700 font-normal">
+            <option value="" className="text-sm font-bold">
+                select as rating
+            </option>
+            {[1,2,3,4,5].map((num) => (
+                <option value={num}>{num}</option>
+            )) }
+        </select>
+        {errors.starRating && (
+            <span className="text-red-500">{errors.starRating.message}</span>
         )}
             </label>
     </div>
