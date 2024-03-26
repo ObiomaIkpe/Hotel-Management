@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import "dotenv/config";
 import authRoutes from './routes/auth';
 import userRoutes from './routes/users';
+import myHotelRoutes from './routes/my-hotels';
 import cookieParser from 'cookie-parser';
 import {v2 as cloudinary} from 'cloudinary';
 
@@ -15,7 +16,7 @@ cloudinary.config({
 });
 
 mongoose.connect(process.env.MONGO_URL as string).then(() => {
-    console.log("connected to databse:", process.env.MONGO_URL)
+    console.log("connected to databse:")
 });
 
 const app = express();
@@ -29,8 +30,9 @@ app.use(cors({
 
 app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
-app.use("/api/auth", authRoutes)
-app.use("/api/users", userRoutes)
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/my-hotels", myHotelRoutes)
 
 app.listen(7000, () => {
     console.log('server is running on port 7000')

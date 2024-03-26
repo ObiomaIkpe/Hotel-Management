@@ -8,7 +8,7 @@ import Hotel from '../models/hotel'
 export const myHotels = async (req: Request, res: Response) => {
     const storage = multer.memoryStorage();
     
-    const upload = multer({
+    const upload = multer({ 
         storage: storage,
         limits: {
             fileSize: 5 * 1024 * 1024 // 5mb
@@ -43,6 +43,7 @@ export const myHotels = async (req: Request, res: Response) => {
         const hotel = new Hotel(newHotel);
 
         //4. return a 201 status
+        res.status(201).send(hotel)
     } catch (error) {
         console.log('error creating hotel', error);
         res.status(500).json({message: "Something went wrong!"})
