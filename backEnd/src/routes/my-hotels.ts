@@ -5,7 +5,7 @@ import { body } from 'express-validator';
 const router  = express.Router();
 
 // api/my-hotels
-router.post("/", verifyToken,
+router.post("/",
 [
     body("name").notEmpty().withMessage("Name is required!"),
     body("city").notEmpty().withMessage("City is required!"),
@@ -14,7 +14,7 @@ router.post("/", verifyToken,
     body("type").notEmpty().withMessage("Hotel type is required!"),
     body("pricePerNight").notEmpty().isNumeric().withMessage("pricePerNight is required and must be a number!"),
     body("facilities").notEmpty().isArray().withMessage("Facilities are required")
-  ]);
+  ], verifyToken, myHotels);
 
 
 export default router;
